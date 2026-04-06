@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import importlib
 import json
 import re
 from dataclasses import dataclass
@@ -9,7 +10,6 @@ from typing import Any
 
 import yaml
 from jinja2 import Environment, FileSystemLoader, select_autoescape
-from playwright.async_api import async_playwright
 from sqlalchemy.orm import Session, sessionmaker
 
 from memory.db import CV, Evaluation, Job
@@ -57,6 +57,10 @@ class ParsedCV:
     projects: list[dict[str, Any]]
     education: list[dict[str, str]]
     skills: list[str]
+
+
+class CVBuilderError(RuntimeError):
+    """Raised when CV build/render operations fail."""
 
 
 class CVBuilder:
@@ -406,6 +410,7 @@ class CVBuilder:
         )
 
     async def _render_pdf(self, html: str, target_path: Path, page_format: str) -> None:
+        async_playwright = self._load_playwright_sdk()
         async with async_playwright() as p:
             browser = await p.chromium.launch()
             page = await browser.new_page()
@@ -418,6 +423,20 @@ class CVBuilder:
                 margin={"top": "0.5in", "right": "0.5in", "bottom": "0.5in", "left": "0.5in"},
             )
             await browser.close()
+
+    @staticmethod
+    def _load_playwright_sdk() -> Any:
+        try:
+            module = importlib.import_module("playwright.async_api")
+        except ImportError as exc:
+            raise CVBuilderError(
+                "The 'playwright' package is not installed. Install dependencies first: pip install -e ."
+            ) from exc
+
+        async_playwright = getattr(module, "async_playwright", None)
+        if async_playwright is None:
+            raise CVBuilderError("Installed playwright package does not expose async_playwright.")
+        return async_playwright
 
     @staticmethod
     def _output_slug(company: str | None, role: str | None, dt: datetime) -> str:

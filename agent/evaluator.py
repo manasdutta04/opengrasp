@@ -32,6 +32,7 @@ SCORE_KEYS: tuple[str, ...] = (
 @dataclass(slots=True)
 class EvaluationResult:
     job_id: int | None
+    evaluation_id: int | None
     scores: dict[str, float]
     weighted_total: float
     grade: str
@@ -199,6 +200,7 @@ class JobEvaluator:
 
         return EvaluationResult(
             job_id=job_id,
+            evaluation_id=None,
             scores=scores,
             weighted_total=weighted_total,
             grade=grade,
@@ -310,6 +312,8 @@ class JobEvaluator:
         session.add(evaluation)
         session.add(job)
         session.commit()
+        session.refresh(evaluation)
+        result.evaluation_id = evaluation.id
 
     def _render_markdown_report(
         self,
