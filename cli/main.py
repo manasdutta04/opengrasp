@@ -3,7 +3,7 @@ from __future__ import annotations
 import typer
 from rich.console import Console
 
-from cli.commands import apply, setup, tracker
+from cli.commands import apply, scan, setup, tracker
 
 app = typer.Typer(
     help=(
@@ -11,6 +11,7 @@ app = typer.Typer(
         "Examples:\n"
         "  openapply setup\n"
         "  openapply apply <url-or-jd-text>\n"
+        "  openapply scan [--auto]\n"
         "  openapply tracker\n"
         "  openapply --help\n"
     ),
@@ -75,6 +76,21 @@ def tracker_command(
         date_to=date_to,
         sort_by=sort_by,  # type: ignore[arg-type]
     )
+
+
+@app.command(
+    "scan",
+    help=(
+        "Discover jobs across configured portals.\n\n"
+        "Examples:\n"
+        "  openapply scan\n"
+        "  openapply scan --auto"
+    ),
+)
+def scan_command(
+    auto: bool = typer.Option(False, "--auto", help="Evaluate discovered jobs and queue B+ matches."),
+) -> None:
+    scan.command(auto=auto)
 
 
 if __name__ == "__main__":
