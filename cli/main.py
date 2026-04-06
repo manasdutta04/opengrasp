@@ -3,7 +3,7 @@ from __future__ import annotations
 import typer
 from rich.console import Console
 
-from cli.commands import apply, setup
+from cli.commands import apply, setup, tracker
 
 app = typer.Typer(
     help=(
@@ -11,6 +11,7 @@ app = typer.Typer(
         "Examples:\n"
         "  openapply setup\n"
         "  openapply apply <url-or-jd-text>\n"
+        "  openapply tracker\n"
         "  openapply --help\n"
     ),
     no_args_is_help=True,
@@ -49,6 +50,31 @@ def setup_command() -> None:
 )
 def apply_command(target: str = typer.Argument(..., help="Job URL or raw JD text.")) -> None:
     apply.command(target)
+
+
+@app.command(
+    "tracker",
+    help=(
+        "Interactive dashboard for applications and outcomes.\n\n"
+        "Examples:\n"
+        "  openapply tracker\n"
+        "  openapply tracker --grade B --status applied --sort-by score"
+    ),
+)
+def tracker_command(
+    grade: str | None = typer.Option(None, "--grade", help="Filter by grade (A/B/C/D/F)."),
+    status: str | None = typer.Option(None, "--status", help="Filter by status."),
+    date_from: str | None = typer.Option(None, "--date-from", help="Start date YYYY-MM-DD."),
+    date_to: str | None = typer.Option(None, "--date-to", help="End date YYYY-MM-DD."),
+    sort_by: str = typer.Option("date", "--sort-by", help="Sort by score/date/company."),
+) -> None:
+    tracker.command(
+        grade=grade,
+        status=status,
+        date_from=date_from,
+        date_to=date_to,
+        sort_by=sort_by,  # type: ignore[arg-type]
+    )
 
 
 if __name__ == "__main__":
