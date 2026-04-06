@@ -239,13 +239,13 @@ class JobScraper:
     .map((el, idx) => {
       const tag = el.tagName.toLowerCase();
       const type = (el.getAttribute('type') || tag).toLowerCase();
-      const name = el.getAttribute('name') || el.getAttribute('id') || `field_${idx}`;
+    const name = el.getAttribute('name') || el.getAttribute('id') || ('field_' + idx);
       const id = el.getAttribute('id') || '';
       const placeholder = el.getAttribute('placeholder') || '';
       const aria = el.getAttribute('aria-label') || '';
       let label = '';
       if (id) {
-        const labelNode = document.querySelector(`label[for="${id}"]`);
+        const labelNode = document.querySelector('label[for="' + id + '"]');
         if (labelNode) label = (labelNode.textContent || '').trim();
       }
       if (!label) {
@@ -259,7 +259,7 @@ class JobScraper:
         label,
         placeholder,
         aria,
-        selector: id ? `#${id}` : `[name="${name}"]`
+                selector: id ? ('#' + id) : ('[name="' + name + '"]')
       };
     });
 }
