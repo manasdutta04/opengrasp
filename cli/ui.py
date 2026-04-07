@@ -7,7 +7,6 @@ from typing import Iterable
 import httpx
 import yaml
 from rich import box
-from rich.align import Align
 from rich.columns import Columns
 from rich.console import Console, Group
 from rich.panel import Panel
@@ -103,15 +102,14 @@ def gather_banner_status(project_root: Path) -> BannerStatus:
 
 
 def _openapply_logo() -> list[str]:
-    # Keep this compact so it renders well in 80–100 cols.
-    # Use safe ASCII characters only (Windows terminal font fallback can
-    # render box-drawing glyphs incorrectly).
+    # Big ASCII wordmark (safe, widely-supported glyphs).
     return [
-        "  ___   ___   ___   _   _   ___   _      _   _ ",
-        " / _ \\ / _ \\ / _ \\ | | | | / _ \\ | |    | | | |",
-        "| (_) | |_) | (_) || |_| || (_) || |___ | |_| |",
-        " \\___/| .__/ \\___/  \\___/  \\___/ |_____| \\___/ ",
-        "      |_|            openapply                  ",
+        " ██████╗ ██████╗ ███████╗███╗   ██╗ █████╗ ██████╗ ██████╗ ██╗  ██╗   ██╗",
+        "██╔═══██╗██╔══██╗██╔════╝████╗  ██║██╔══██╗██╔══██╗██╔══██╗██║  ╚██╗ ██╔╝",
+        "██║   ██║██████╔╝█████╗  ██╔██╗ ██║███████║██████╔╝██████╔╝██║   ╚████╔╝ ",
+        "██║   ██║██╔═══╝ ██╔══╝  ██║╚██╗██║██╔══██║██╔═══╝ ██╔═══╝ ██║    ╚██╔╝  ",
+        "╚██████╔╝██║     ███████╗██║ ╚████║██║  ██║██║     ██║     ███████╗██║   ",
+        " ╚═════╝ ╚═╝     ╚══════╝╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝     ╚═╝     ╚══════╝╚═╝   ",
     ]
 
 
@@ -127,8 +125,12 @@ def _section(title: str, lines: Iterable[Text]) -> Group:
 def print_banner(project_root: Path, *, version: str) -> None:
     st = gather_banner_status(project_root)
 
-    left_lines = [Text(line, style="accent") for line in _openapply_logo()]
-    left = Group(*left_lines, Text("local-first job agent", style="muted"))
+    logo = Group(*[Text(line, style="accent") for line in _openapply_logo()])
+    left = Group(
+        logo,
+        Text.assemble(("openapply", "accent"), ("  ", "muted"), (f"v{version}", "muted")),
+        Text("local-first job agent", style="muted"),
+    )
 
     getting_started = _section(
         "Getting started",
@@ -156,6 +158,7 @@ def print_banner(project_root: Path, *, version: str) -> None:
             _cmd_line("openapply outreach <job-id>", "draft a DM/email"),
             _cmd_line("openapply compare 12,15,22", "compare offers/jobs"),
             _cmd_line("openapply learn <job-id> <outcome>", "log outcomes"),
+            _cmd_line("openapply update", "update openapply to latest"),
         ],
     )
 
@@ -185,7 +188,7 @@ def print_banner(project_root: Path, *, version: str) -> None:
     # Two-column layout inside a single boxed panel (Shipwell-like).
     content = Columns([left, right], equal=False, expand=True, padding=(0, 4))
 
-    title = Text.assemble(("OpenApply", "accent"), ("  ", "muted"), (f"v{version}", "muted"))
+    title = Text.assemble(("openapply", "accent"), ("  ", "muted"), (f"v{version}", "muted"))
     console.print("")
     console.print(panel(str(title), content))
     console.print("")

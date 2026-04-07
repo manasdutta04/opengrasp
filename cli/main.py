@@ -6,7 +6,7 @@ from pathlib import Path
 
 import typer
 
-from cli.commands import apply, batch, compare, doctor, learn, outreach, pipeline, portal, research, scan, setup, tracker
+from cli.commands import apply, batch, compare, doctor, learn, outreach, pipeline, portal, research, scan, setup, tracker, update
 
 app = typer.Typer(
     help=(
@@ -75,6 +75,14 @@ def doctor_command() -> None:
 )
 def portal_command() -> None:
     portal.command()
+
+
+@app.command(
+    "update",
+    help="Update openapply to the latest version (pip).",
+)
+def update_command() -> None:
+    update.command()
 
 
 @app.command(
