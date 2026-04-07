@@ -125,7 +125,13 @@ def _section(title: str, lines: Iterable[Text]) -> Group:
 def print_banner(project_root: Path, *, version: str) -> None:
     st = gather_banner_status(project_root)
 
-    logo = Group(*[Text(line, style="accent") for line in _openapply_logo()])
+    # Prevent ASCII logo from wrapping; crop on narrow terminals.
+    logo = Group(
+        *[
+            Text(line, style="accent", overflow="crop", no_wrap=True)
+            for line in _openapply_logo()
+        ]
+    )
     left = Group(
         logo,
         Text.assemble(("openapply", "accent"), ("  ", "muted"), (f"v{version}", "muted")),
@@ -185,8 +191,12 @@ def print_banner(project_root: Path, *, version: str) -> None:
         Group(Text("Status", style="k"), status_table),
     )
 
-    # Two-column layout inside a single boxed panel (Shipwell-like).
-    content = Columns([left, right], equal=False, expand=True, padding=(0, 4))
+    # Two-column when there's room; otherwise stack vertically.
+    width = console.size.width
+    if width < 110:
+        content = Group(left, Text(""), right)
+    else:
+        content = Columns([left, right], equal=False, expand=True, padding=(0, 4))
 
     title = Text.assemble(("openapply", "accent"), ("  ", "muted"), (f"v{version}", "muted"))
     console.print("")
