@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import shutil
+import subprocess
+import sys
 from importlib.resources import files
 from pathlib import Path
 from typing import Any
@@ -13,6 +15,7 @@ from rich.panel import Panel
 from rich.table import Table
 
 from memory.db import create_sqlite_engine, initialize_database
+from cli.pipeline_queue import ensure_pipeline_file
 
 console = Console()
 
@@ -203,6 +206,24 @@ def _initialize_db(project_root: Path) -> None:
     console.print(f"[green]Database initialized:[/green] {(project_root / 'data' / 'openapply.db').as_posix()}")
 
 
+def _maybe_install_playwright_browsers() -> None:
+    install = typer.confirm(
+        "Install Playwright Chromium browser now? (recommended for scan + PDF)",
+        default=True,
+    )
+    if not install:
+        return
+    try:
+        subprocess.run(
+            [sys.executable, "-m", "playwright", "install", "chromium"],
+            check=True,
+        )
+        console.print("[green]Playwright Chromium installed.[/green]")
+    except Exception as exc:
+        console.print("[yellow]Playwright browser install failed.[/yellow]")
+        console.print(f"[dim]Details: {exc}[/dim]")
+
+
 def run_setup() -> None:
     """Interactive first-run wizard."""
     root = _workspace_root()
@@ -249,6 +270,8 @@ def run_setup() -> None:
 
     _save_yaml(config_path, config)
     _initialize_db(root)
+    ensure_pipeline_file(root)
+    _maybe_install_playwright_browsers()
 
     console.print("")
     console.print("[bold green]You're ready. Run:[/bold green] [cyan]openapply scan[/cyan]")

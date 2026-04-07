@@ -32,7 +32,7 @@ def _check_ollama(config: dict) -> tuple[bool, str]:
 def _check_playwright() -> tuple[bool, str]:
     try:
         importlib.import_module("playwright.async_api")
-        return True, "Playwright import OK"
+        return True, "Playwright import OK (run: python -m playwright install chromium if browser missing)"
     except Exception as exc:
         return False, f"Playwright not installed/usable: {exc}"
 
