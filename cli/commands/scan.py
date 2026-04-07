@@ -5,7 +5,6 @@ from pathlib import Path
 from typing import Any
 
 import typer
-from rich.console import Console
 from rich.panel import Panel
 from rich.table import Table
 from sqlalchemy import desc, select
@@ -18,7 +17,7 @@ from agent.scraper import JobScraper
 from memory.db import Evaluation, Job, Portal, build_session_factory, create_sqlite_engine, initialize_database
 from cli.pipeline_queue import append_pending
 
-console = Console()
+from cli.ui import console, panel
 
 _PORTALS_REQUIRED_MESSAGE = (
     "[yellow]No active portals enabled in portals.yml.[/yellow]\n"
@@ -29,15 +28,15 @@ _PORTALS_REQUIRED_MESSAGE = (
 
 def _show_summary(new_jobs: list[Job]) -> None:
     count = len(new_jobs)
-    console.print(f"Found [bold green]{count}[/bold green] new matches.")
+    console.print(f"[k]Found[/k] [good]{count}[/good] [muted]new matches.[/muted]")
 
     top = new_jobs[:5]
     if not top:
         return
 
-    table = Table(title="Top 5 New Matches")
-    table.add_column("Job ID", justify="right", style="cyan")
-    table.add_column("Company", style="green")
+    table = Table(title="Top 5 New Matches", box=None)
+    table.add_column("Job ID", justify="right", style="cmd")
+    table.add_column("Company", style="good")
     table.add_column("Role")
     table.add_column("URL")
 
@@ -113,7 +112,7 @@ async def _run_scan(auto: bool, max_jobs_per_portal: int, max_links_per_portal: 
         project_root=project_root,
     )
 
-    console.print("[bold]Scanning active portals...[/bold]")
+    console.print("[k]Scanning active portals…[/k]")
     result = await scanner.scan(
         max_links_per_portal=max_links_per_portal,
         max_jobs_per_portal=max_jobs_per_portal,
@@ -138,12 +137,7 @@ async def _run_scan(auto: bool, max_jobs_per_portal: int, max_links_per_portal: 
             console.print(f"[dim]Details: {exc}[/dim]")
             return
 
-        console.print(
-            Panel.fit(
-                f"Evaluated: {evaluated_count} | Added to pipeline: {queued_count}",
-                border_style="blue",
-            )
-        )
+        console.print(panel("Auto routing", f"Evaluated: {evaluated_count}\nAdded to pipeline: {queued_count}"))
 
 
 def command(

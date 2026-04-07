@@ -1,12 +1,11 @@
 from __future__ import annotations
 
 import typer
-from rich.console import Console
 
 from agent.ollama_client import OllamaClientError
 from cli.flows.offer_pipeline import run_offer_pipeline
 
-console = Console()
+from cli.ui import console
 
 
 async def _run_pipeline(target: str) -> None:

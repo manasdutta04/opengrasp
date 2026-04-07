@@ -8,14 +8,12 @@ from typing import Any
 
 import typer
 import yaml
-from rich.console import Console
-from rich.panel import Panel
 from sqlalchemy import desc, select
 
 from agent.ollama_client import OllamaClient, OllamaClientError
 from memory.db import Evaluation, Job, build_session_factory, create_sqlite_engine, initialize_database
 
-console = Console()
+from cli.ui import console, panel
 
 
 def _load_prompt(project_root: Path) -> str:
@@ -99,7 +97,7 @@ def command(
         import asyncio
 
         path = asyncio.run(_run_outreach(job_id, channel_norm))
-        console.print(Panel.fit(f"Saved outreach draft:\n{path.as_posix()}", border_style="blue"))
+        console.print(panel("Saved", f"Outreach draft:\n{path.as_posix()}"))
     except OllamaClientError as exc:
         console.print("[red]Ollama is unavailable or misconfigured.[/red]")
         console.print(f"[dim]Details: {exc}[/dim]")

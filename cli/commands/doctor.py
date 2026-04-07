@@ -6,14 +6,13 @@ from pathlib import Path
 import httpx
 import typer
 import yaml
-from rich.console import Console
 from rich.panel import Panel
 from sqlalchemy import select
 
 from agent.portals_config import load_portals_config
 from memory.db import Job, Portal, build_session_factory, create_sqlite_engine, initialize_database
 
-console = Console()
+from cli.ui import console, panel
 
 _PORTALS_FIX = (
     "Edit portals.yml and set at least one entry to 'active: true'. "
@@ -113,7 +112,7 @@ def command() -> None:
         mark = "[green]OK[/green]" if ok else "[red]FAIL[/red]"
         lines.append(f"- {mark} [bold]{name}[/bold]: {msg}")
 
-    console.print(Panel("\n".join(lines), title="openapply doctor", border_style="blue"))
+    console.print(panel("openapply doctor", "\n".join(lines)))
     if failed:
         raise typer.Exit(code=1)
 

@@ -5,7 +5,6 @@ from pathlib import Path
 
 import typer
 import yaml
-from rich.console import Console
 from rich.table import Table
 
 from agent.cv_builder import CVBuilderError
@@ -14,7 +13,7 @@ from agent.scraper import JobScraper, ScraperError
 from cli.flows.offer_pipeline import PipelineResult, log_application, run_offer_pipeline
 from memory.db import build_session_factory, create_sqlite_engine, initialize_database
 
-console = Console()
+from cli.ui import console, panel
 
 async def _run_apply(target: str) -> None:
     project_root = Path.cwd()
@@ -26,12 +25,12 @@ async def _run_apply(target: str) -> None:
 
     choice = typer.prompt("Apply now? [y/N/later]", default="N").strip().lower()
     if choice not in {"y", "yes"}:
-        console.print("[bold]Apply postponed.[/bold]")
+        console.print(panel("Apply", "[muted]Postponed.[/muted]"))
         return
 
-    console.print("[bold]Drafting application form values (HITL)...[/bold]")
+    console.print("[k]Drafting application form values (HITL)…[/k]")
     if not target.strip().lower().startswith("http"):
-        console.print("[yellow]Input was JD text, not URL. Cannot open a live form to fill.[/yellow]")
+        console.print(panel("Form fill", "[warn]Input was JD text, not URL.[/warn]\nCannot open a live form to fill."))
         engine = create_sqlite_engine()
         initialize_database(engine)
         session_factory = build_session_factory(engine)
@@ -41,7 +40,7 @@ async def _run_apply(target: str) -> None:
             human_reviewed=False,
             session_factory=session_factory,
         )
-        console.print(f"Application draft logged with ID: [green]{application_id}[/green]")
+        console.print(panel("Logged", f"Application draft ID: [good]{application_id}[/good]"))
         return
 
     scraper = JobScraper()
@@ -55,10 +54,10 @@ async def _run_apply(target: str) -> None:
         cv_data={"profile": profile, "summary": pipeline.evaluation.summary},
     )
 
-    table = Table(title="Drafted Application Fields")
-    table.add_column("Name", style="cyan")
-    table.add_column("Type", style="green")
-    table.add_column("Status", style="yellow")
+    table = Table(title="Drafted Application Fields", box=None)
+    table.add_column("Name", style="cmd")
+    table.add_column("Type", style="good")
+    table.add_column("Status", style="warn")
     table.add_column("Value", style="white")
 
     for field in fill_result.get("filled_fields", []):
@@ -85,8 +84,7 @@ async def _run_apply(target: str) -> None:
         session_factory=session_factory,
     )
 
-    console.print("[bold]Logged application to DB[/bold]")
-    console.print(f"Application ID: [green]{application_id}[/green]")
+    console.print(panel("Logged", f"Application ID: [good]{application_id}[/good]"))
 
 
 def command(

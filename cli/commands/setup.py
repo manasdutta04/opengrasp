@@ -10,14 +10,12 @@ from typing import Any
 import httpx
 import typer
 import yaml
-from rich.console import Console
-from rich.panel import Panel
 from rich.table import Table
 
 from memory.db import create_sqlite_engine, initialize_database
 from cli.pipeline_queue import ensure_pipeline_file
 
-console = Console()
+from cli.ui import console, panel
 
 
 def _workspace_root() -> Path:
@@ -231,18 +229,18 @@ def run_setup() -> None:
     cv_path = root / "cv.md"
     portals_path = root / "portals.yml"
 
-    console.print(Panel.fit("Open Apply Setup Wizard", border_style="cyan"))
+    console.print(panel("OpenApply setup", "First-time wizard"))
 
     if not config_path.exists():
         config_example = root / "config.example.yml"
         if config_example.exists():
             shutil.copyfile(config_example, config_path)
-            console.print("[green]Copied config.example.yml -> config.yml[/green]")
+            console.print("[good]Copied[/good] config.example.yml -> config.yml")
         else:
             try:
                 bundled = files("cli").joinpath("assets/config.example.yml")
                 config_path.write_text(bundled.read_text(encoding="utf-8"), encoding="utf-8")
-                console.print("[green]Created config.yml from packaged defaults.[/green]")
+                console.print("[good]Created[/good] config.yml from packaged defaults")
             except Exception as exc:
                 raise typer.BadParameter(
                     "No config template found. Reinstall package or create config.yml manually."
@@ -253,12 +251,12 @@ def run_setup() -> None:
         if portals_example.exists():
             # Do not overwrite a user-edited portals.yml (only bootstrap when missing).
             shutil.copyfile(portals_example, portals_path)
-            console.print("[green]Copied portals.example.yml -> portals.yml[/green]")
+            console.print("[good]Copied[/good] portals.example.yml -> portals.yml")
         else:
             try:
                 bundled = files("cli").joinpath("assets/portals.example.yml")
                 portals_path.write_text(bundled.read_text(encoding="utf-8"), encoding="utf-8")
-                console.print("[green]Created portals.yml from packaged defaults.[/green]")
+                console.print("[good]Created[/good] portals.yml from packaged defaults")
             except Exception:
                 # portals.yml is optional; scanning can still work via DB portal rows.
                 pass
@@ -277,7 +275,7 @@ def run_setup() -> None:
     _maybe_install_playwright_browsers()
 
     console.print("")
-    console.print("[bold green]You're ready. Run:[/bold green] [cyan]openapply scan[/cyan]")
+    console.print(panel("Next", "Run:\n- openapply doctor\n- openapply scan --limit 5 --link-limit 30"))
 
 
 def command() -> None:

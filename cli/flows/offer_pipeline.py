@@ -12,8 +12,6 @@ from typing import Any
 
 import typer
 import yaml
-from rich.console import Console
-from rich.panel import Panel
 from rich.table import Table
 from sqlalchemy import desc, select
 
@@ -23,7 +21,7 @@ from agent.ollama_client import OllamaClient
 from agent.scraper import JobScraper
 from memory.db import Application, Evaluation, Job, build_session_factory, create_sqlite_engine, initialize_database
 
-console = Console()
+from cli.ui import console, panel
 
 
 @dataclass(slots=True)
@@ -181,20 +179,20 @@ def _slugify(value: str) -> str:
 
 
 def _show_scorecard(result: EvaluationResult) -> None:
-    table = Table(title="Job Evaluation")
-    table.add_column("Dimension", style="cyan")
-    table.add_column("Score", justify="right", style="green")
+    table = Table(title="Job Evaluation", box=None)
+    table.add_column("Dimension", style="cmd")
+    table.add_column("Score", justify="right", style="good")
 
     for key, value in result.scores.items():
         table.add_row(key, f"{value:.1f}")
 
     console.print(table)
     console.print(
-        Panel.fit(
-            f"Total: [bold]{result.weighted_total:.2f}[/bold] | "
-            f"Grade: [bold]{result.grade}[/bold] | "
-            f"Recommendation: [bold]{result.recommendation}[/bold]",
-            border_style="blue",
+        panel(
+            "Summary",
+            f"Total: [k]{result.weighted_total:.2f}[/k]\n"
+            f"Grade: [k]{result.grade}[/k]\n"
+            f"Recommendation: [k]{result.recommendation}[/k]",
         )
     )
 
@@ -278,10 +276,10 @@ async def run_offer_pipeline(target: str, *, interactive: bool, allow_form_draft
     if evaluation_id is None:
         raise RuntimeError("Evaluation was not persisted; cannot continue pipeline.")
 
-    console.print("[bold]3/6[/bold] Generating tailored CV PDF...")
+    console.print("[k]3/6[/k] [muted]Generating tailored CV PDF…[/muted]")
     cv_result = await cv_builder.build_for_job(job.id, evaluation_id)
 
-    console.print("[bold]4/6[/bold] Generating cover letter...")
+    console.print("[k]4/6[/k] [muted]Generating cover letter…[/muted]")
     jd_for_cover = jd_payload.get("description", "") if jd_payload else target
     cover_path = await _generate_cover_letter(
         project_root=project_root,
@@ -301,15 +299,23 @@ async def run_offer_pipeline(target: str, *, interactive: bool, allow_form_draft
         company=job.company,
     )
 
-    console.print("[bold]5/6[/bold] Showing CV diff vs base cv.md...")
+    console.print("[k]5/6[/k] [muted]CV diff vs base cv.md…[/muted]")
     diff_text = _render_cv_diff(base_cv_path=cv_path, tailored_cv_path=cv_result.cv_path)
-    console.print(Panel(diff_text, title="CV Diff Preview", border_style="magenta"))
+    console.print(panel("CV diff", diff_text, subtitle="Preview (truncated)"))
 
-    console.print("[bold]6/6[/bold] Artifacts")
-    console.print(f"- Tailored CV markdown: {cv_result.cv_path.as_posix()}")
-    console.print(f"- Tailored CV PDF: {cv_result.pdf_path.as_posix()}")
-    console.print(f"- Cover letter: {cover_path.as_posix()}")
-    console.print(f"- Evaluation report: {evaluation_result.report_path.as_posix()}")
+    console.print(
+        panel(
+            "Artifacts",
+            "\n".join(
+                [
+                    f"- Tailored CV markdown: {cv_result.cv_path.as_posix()}",
+                    f"- Tailored CV PDF: {cv_result.pdf_path.as_posix()}",
+                    f"- Cover letter: {cover_path.as_posix()}",
+                    f"- Evaluation report: {evaluation_result.report_path.as_posix()}",
+                ]
+            ),
+        )
+    )
 
     return PipelineResult(
         job=job,

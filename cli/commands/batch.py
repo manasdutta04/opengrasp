@@ -6,7 +6,6 @@ from pathlib import Path
 
 import typer
 import yaml
-from rich.console import Console
 from rich.panel import Panel
 from rich.progress import BarColumn, Progress, SpinnerColumn, TextColumn, TimeElapsedColumn
 from rich.table import Table
@@ -19,7 +18,7 @@ from agent.scraper import JobScraper
 from memory.db import build_session_factory, create_sqlite_engine, initialize_database
 from cli.pipeline_queue import PipelineState, dedupe_keep_order, ensure_pipeline_file, load_pipeline, save_pipeline
 
-console = Console()
+from cli.ui import console, panel
 
 async def _run_batch(min_grade: str, limit: int | None) -> None:
     project_root = Path.cwd()
@@ -46,10 +45,10 @@ async def _run_batch(min_grade: str, limit: int | None) -> None:
         pending = pending[: max(0, limit)]
 
     if not pending:
-        console.print("[yellow]Pipeline is empty. Add URLs under Pending in data/pipeline.md[/yellow]")
+        console.print(panel("Queue", "[warn]Pipeline is empty.[/warn]\nAdd URLs under Pending in data/pipeline.md"))
         return
 
-    console.print(f"Queue size: [bold cyan]{len(pending)}[/bold cyan] (concurrency={concurrency})")
+    console.print(f"[k]Queue[/k] [muted]size=[/muted][cmd]{len(pending)}[/cmd] [muted](concurrency={concurrency})[/muted]")
 
     engine = create_sqlite_engine()
     initialize_database(engine)

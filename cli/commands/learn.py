@@ -5,8 +5,6 @@ from datetime import datetime, timedelta, timezone
 from typing import Literal
 
 import typer
-from rich.console import Console
-from rich.panel import Panel
 from rich.table import Table
 from sqlalchemy import and_, desc, func, select
 
@@ -21,7 +19,7 @@ from memory.db import (
     initialize_database,
 )
 
-console = Console()
+from cli.ui import console, panel
 
 OutcomeType = Literal["interview", "rejected", "offer", "ghosted"]
 
@@ -212,9 +210,9 @@ def command(
         session.commit()
 
         summary = Table(title="Learning Update")
-        summary.add_column("Dimension", style="cyan")
+        summary.add_column("Dimension", style="cmd")
         summary.add_column("Old", justify="right")
-        summary.add_column("New", justify="right", style="green")
+        summary.add_column("New", justify="right", style="good")
         summary.add_column("Delta", justify="right")
 
         for item in sorted(adjustments, key=lambda a: abs(a.new_weight - a.old_weight), reverse=True)[:6]:
@@ -231,19 +229,14 @@ def command(
         if bonus_company_stage:
             count = _last_month_b_grade_interviews_for_company_stage(session)
             console.print(
-                Panel.fit(
+                panel(
+                    "Signal",
                     (
                         "You've had "
                         f"{count} interviews from B-grade roles with strong company-stage fit "
                         "in the last month. Adjusting company_stage weight up."
                     ),
-                    border_style="blue",
                 )
             )
 
-        console.print(
-            Panel.fit(
-                f"Outcome logged for job {job_id}: {outcome}. Scoring weights updated.",
-                border_style="green",
-            )
-        )
+        console.print(panel("Saved", f"Outcome logged for job {job_id}: {outcome}.\nScoring weights updated."))

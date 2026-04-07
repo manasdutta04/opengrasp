@@ -1,7 +1,10 @@
 from __future__ import annotations
 
+import sys
+from importlib import metadata
+from pathlib import Path
+
 import typer
-from rich.console import Console
 
 from cli.commands import apply, batch, compare, doctor, learn, outreach, pipeline, research, scan, setup, tracker
 
@@ -17,17 +20,33 @@ app = typer.Typer(
         "  openapply tracker\n"
         "  openapply --help\n"
     ),
-    no_args_is_help=True,
+    no_args_is_help=False,
     rich_markup_mode="rich",
 )
 
-console = Console()
 
-
-@app.callback()
-def main() -> None:
+@app.callback(invoke_without_command=True)
+def main(ctx: typer.Context) -> None:
     """Open Apply command registry."""
-    return None
+    # If a subcommand was invoked, do nothing.
+    if ctx.invoked_subcommand is not None:
+        return
+
+    # When Click is parsing for help/completion, don't emit the banner.
+    if getattr(ctx, "resilient_parsing", False):
+        return
+    if any(arg in {"--help", "-h", "--show-completion", "--install-completion"} for arg in sys.argv[1:]):
+        return
+
+    try:
+        version = metadata.version("openapply")
+    except Exception:
+        version = "dev"
+
+    from cli.ui import print_banner
+
+    print_banner(Path.cwd(), version=version)
+    raise typer.Exit(code=0)
 
 
 @app.command(
