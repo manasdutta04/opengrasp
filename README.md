@@ -114,6 +114,49 @@ Web UI support is planned as secondary priority.
 - docs/ARCHITECTURE.md
 - docs/SETUP.md
 
+## Publish To PyPI
+
+Use this flow to publish releases so users can run:
+
+```bash
+pip install openapply
+openapply setup
+```
+
+Build and validate:
+
+```bash
+python -m pip install --upgrade build twine
+python -m build
+python -m twine check dist/*
+```
+
+Upload to TestPyPI first:
+
+```bash
+python -m twine upload --repository testpypi dist/*
+```
+
+Test install from TestPyPI in a clean environment:
+
+```bash
+python -m pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple openapply
+```
+
+Upload to PyPI:
+
+```bash
+python -m twine upload dist/*
+```
+
+PowerShell helper:
+
+```powershell
+./scripts/publish.ps1
+./scripts/publish.ps1 -TestPyPI
+./scripts/publish.ps1 -PyPI
+```
+
 ## Inspiration
 
 Inspired by the ideas popularized in career-ops (MIT), including structured fit scoring, CV templating workflow, and portal scanning patterns.

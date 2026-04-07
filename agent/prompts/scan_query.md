@@ -23,16 +23,16 @@ Goal: maximize relevant opportunities and minimize noise.
 ## Output Format
 Return ONLY valid JSON:
 
-{
+{{
   "queries": [
-    {
+    {{
       "role": "...",
       "query": "...",
       "location": "...",
       "remote": true,
       "priority": 1
-    }
+    }}
   ],
   "negative_keywords": ["intern", "principal", "onsite-only"],
   "notes": "How queries were optimized for this portal"
-}
+}}

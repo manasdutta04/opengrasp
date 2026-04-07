@@ -18,6 +18,7 @@ coverage.xml
 .venv/
 venv/
 env/
+.env
 
 # Editors/OS
 .vscode/
