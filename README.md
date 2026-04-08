@@ -2,8 +2,8 @@
 
 
 ![License MIT](https://img.shields.io/badge/license-MIT-84CC16?style=for-the-badge)
-![PyPI](https://img.shields.io/pypi/v/opengrasp?style=for-the-badge&label=PyPI)
-![Python](https://img.shields.io/pypi/pyversions/opengrasp?style=for-the-badge&label=Python)
+[![PyPI](https://img.shields.io/badge/PyPI-publishing%20in%20progress-EA580C?style=for-the-badge)](https://pypi.org/project/opengrasp/)
+![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?style=for-the-badge)
 ![Local First](https://img.shields.io/badge/local--first-privacy%20focused-0EA5E9?style=for-the-badge)
 ![HITL](https://img.shields.io/badge/HITL-human%20in%20the%20loop-F59E0B?style=for-the-badge)
 
@@ -182,7 +182,7 @@ General guidance:
 
 ## Project Status
 
-opengrasp is in active development (`0.1.2`) and currently optimized for terminal workflows.
+opengrasp is in active development (`0.1.3`) and currently optimized for terminal workflows.
 Web UI support is planned as secondary priority.
 
 ## Documentation
