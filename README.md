@@ -182,6 +182,7 @@ Web UI support is planned as secondary priority.
 
 - docs/ARCHITECTURE.md
 - docs/SETUP.md
+- docs/PUBLISH.md (maintainers: publish to PyPI)
 
 ## Publish To PyPI
 
