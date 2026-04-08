@@ -32,6 +32,9 @@ function Set-EnvFromDotEnv {
     }
 
     $key = $parts[0].Trim()
+    if ($key.StartsWith('$env:', [System.StringComparison]::OrdinalIgnoreCase)) {
+      $key = $key.Substring(5)
+    }
     $value = $parts[1].Trim()
     if (($value.StartsWith('"') -and $value.EndsWith('"')) -or ($value.StartsWith("'") -and $value.EndsWith("'"))) {
       $value = $value.Substring(1, $value.Length - 2)
