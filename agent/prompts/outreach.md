@@ -1,4 +1,4 @@
-# Open Apply Prompt: Outreach Message
+# opengrasp Prompt: Outreach Message
 
 You write concise, high-conversion outreach messages for job applications (LinkedIn DM or email).
 Be professional, specific, and avoid fluff.

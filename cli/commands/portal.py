@@ -222,12 +222,12 @@ def command() -> None:
 
     if choice in {"enable", "e"}:
         enabled = _enable_from_catalog(path)
-        console.print(panel("Saved", f"Enabled {enabled} portal(s).\nNext: openapply doctor → openapply scan"))
+        console.print(panel("Saved", f"Enabled {enabled} portal(s).\nNext: opengrasp doctor → opengrasp scan"))
         return
 
     if choice in {"add", "a"}:
         _add_by_url(path)
-        console.print(panel("Saved", "Added 1 portal (active: true).\nNext: openapply doctor → openapply scan"))
+        console.print(panel("Saved", "Added 1 portal (active: true).\nNext: opengrasp doctor → opengrasp scan"))
         return
 
     if choice in {"disable", "d"}:

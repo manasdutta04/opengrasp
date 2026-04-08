@@ -1,6 +1,6 @@
 # Copy this file to `portals.yml` and customize.
 #
-# IMPORTANT: you must set at least one portal `active: true` before `openapply scan` will run.
+# IMPORTANT: you must set at least one portal `active: true` before `opengrasp scan` will run.
 
 tracked_companies:
   # Enable one portal to get started:

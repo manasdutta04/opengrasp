@@ -201,7 +201,7 @@ def _setup_ollama(config: dict[str, Any]) -> None:
 def _initialize_db(project_root: Path) -> None:
     engine = create_sqlite_engine()
     initialize_database(engine)
-    console.print(f"[green]Database initialized:[/green] {(project_root / 'data' / 'openapply.db').as_posix()}")
+    console.print(f"[green]Database initialized:[/green] {(project_root / 'data' / 'opengrasp.db').as_posix()}")
 
 
 def _maybe_install_playwright_browsers() -> None:
@@ -229,7 +229,7 @@ def run_setup() -> None:
     cv_path = root / "cv.md"
     portals_path = root / "portals.yml"
 
-    console.print(panel("OpenApply setup", "First-time wizard"))
+    console.print(panel("OpenGrasp setup", "First-time wizard"))
 
     if not config_path.exists():
         config_example = root / "config.example.yml"
@@ -275,13 +275,13 @@ def run_setup() -> None:
     _maybe_install_playwright_browsers()
 
     console.print("")
-    console.print(panel("Next", "Run:\n- openapply doctor\n- openapply scan --limit 5 --link-limit 30"))
+    console.print(panel("Next", "Run:\n- opengrasp doctor\n- opengrasp scan --limit 5 --link-limit 30"))
 
 
 def command() -> None:
     """First-run setup wizard.
 
     Examples:
-      openapply setup
+      opengrasp setup
     """
     run_setup()

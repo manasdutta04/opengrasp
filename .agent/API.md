@@ -1,12 +1,12 @@
-# OpenApply API (Commands)
+# opengrasp API (Commands)
 
-This repo ships a Python CLI tool: `openapply` (see `pyproject.toml` entrypoint `cli.main:app`).
+This repo ships a Python CLI tool: `opengrasp` (see `pyproject.toml` entrypoint `cli.main:app`).
 
 ## Install
 
 ### Users (PyPI)
 ```bash
-pip install openapply
+pip install opengrasp
 ```
 
 ### Contributors (editable)
@@ -18,17 +18,17 @@ python -m playwright install chromium
 ```
 
 ## Commands (core)
-- `openapply setup`: bootstrap `config.yml`, `cv.md`, DB, and (if missing) `portals.yml`.
-- `openapply doctor`: health checks (Ollama/Playwright/DB/config/portals/queue).
-- `openapply scan [--auto]`: discover jobs from `portals.yml` (preferred) or DB portals.
-- `openapply pipeline <url-or-jd-text>`: auto-pipeline (evaluate → report → CV PDF → cover letter).
-- `openapply apply <url-or-jd-text>`: pipeline + optional HITL form draft (never submits).
-- `openapply batch --min-score B --limit 20`: process `data/pipeline.md` in parallel.
-- `openapply tracker`: interactive TUI tracker (cross-platform).
-- `openapply learn <job-id> <outcome>`: log outcome + update weights.
+- `opengrasp setup`: bootstrap `config.yml`, `cv.md`, DB, and (if missing) `portals.yml`.
+- `opengrasp doctor`: health checks (Ollama/Playwright/DB/config/portals/queue).
+- `opengrasp scan [--auto]`: discover jobs from `portals.yml` (preferred) or DB portals.
+- `opengrasp pipeline <url-or-jd-text>`: auto-pipeline (evaluate → report → CV PDF → cover letter).
+- `opengrasp apply <url-or-jd-text>`: pipeline + optional HITL form draft (never submits).
+- `opengrasp batch --min-score B --limit 20`: process `data/pipeline.md` in parallel.
+- `opengrasp tracker`: interactive TUI tracker (cross-platform).
+- `opengrasp learn <job-id> <outcome>`: log outcome + update weights.
 
 ## Commands (stretch parity)
-- `openapply research <job-id>`: generate a research report for a stored job.
-- `openapply outreach <job-id> --channel linkedin|email`: draft outreach.
-- `openapply compare "12,15,22"`: compare 2+ stored jobs.
+- `opengrasp research <job-id>`: generate a research report for a stored job.
+- `opengrasp outreach <job-id> --channel linkedin|email`: draft outreach.
+- `opengrasp compare "12,15,22"`: compare 2+ stored jobs.
 

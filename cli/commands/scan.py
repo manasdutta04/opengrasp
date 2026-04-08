@@ -21,9 +21,9 @@ from cli.ui import console, panel
 
 _PORTALS_REQUIRED_MESSAGE = (
     "[yellow]No active portals enabled in portals.yml.[/yellow]\n"
-    "Run [bold]openapply portal[/bold] to enable at least one portal (or edit portals.yml), then re-run:\n"
-    "  openapply doctor\n"
-    "  openapply scan\n"
+    "Run [bold]opengrasp portal[/bold] to enable at least one portal (or edit portals.yml), then re-run:\n"
+    "  opengrasp doctor\n"
+    "  opengrasp scan\n"
 )
 
 def _show_summary(new_jobs: list[Job]) -> None:
@@ -84,7 +84,7 @@ async def _run_scan(auto: bool, max_jobs_per_portal: int, max_links_per_portal: 
     config_path = project_root / "config.yml"
 
     if not config_path.exists():
-        raise typer.BadParameter("config.yml not found. Run 'openapply setup' first.")
+        raise typer.BadParameter("config.yml not found. Run 'opengrasp setup' first.")
 
     engine = create_sqlite_engine()
     initialize_database(engine)
@@ -152,8 +152,8 @@ def command(
     """Discover jobs across active portals.
 
     Examples:
-      openapply scan
-      openapply scan --auto
+      opengrasp scan
+      opengrasp scan --auto
     """
     try:
         asyncio.run(_run_scan(auto=auto, max_jobs_per_portal=limit, max_links_per_portal=link_limit))

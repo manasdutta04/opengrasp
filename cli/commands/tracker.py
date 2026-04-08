@@ -17,15 +17,15 @@ def command(
     """Interactive tracker dashboard.
 
     Examples:
-      openapply tracker
-      openapply tracker --grade B --status applied --sort-by score
-      openapply tracker --date-from 2026-01-01 --date-to 2026-04-30
+      opengrasp tracker
+      opengrasp tracker --grade B --status applied --sort-by score
+      opengrasp tracker --date-from 2026-01-01 --date-to 2026-04-30
     """
     if non_interactive:
         rows = fetch_rows(sort_by)
         rows = apply_filter(rows, "all", grade, status)
 
-        table = Table(title="Open Apply Tracker (non-interactive)")
+        table = Table(title="Open Grasp Tracker (non-interactive)")
         table.add_column("Job ID", justify="right", style="cyan")
         table.add_column("Company", style="green")
         table.add_column("Role")
@@ -53,7 +53,7 @@ def command(
     except ModuleNotFoundError as exc:
         raise typer.BadParameter(
             "Interactive tracker requires the 'textual' dependency. "
-            "Install it by re-installing OpenApply (pip install -e .) or: pip install textual"
+            "Install it by re-installing OpenGrasp (pip install -e .) or: pip install textual"
         ) from exc
 
     app = TrackerApp(sort_by=sort_by, grade=grade, status=status)

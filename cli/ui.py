@@ -101,15 +101,15 @@ def gather_banner_status(project_root: Path) -> BannerStatus:
     )
 
 
-def _openapply_logo() -> list[str]:
+def _opengrasp_logo() -> list[str]:
     # Big ASCII wordmark (safe, widely-supported glyphs).
     return [
-        " ██████╗ ██████╗ ███████╗███╗   ██╗ █████╗ ██████╗ ██████╗ ██╗  ██╗   ██╗",
-        "██╔═══██╗██╔══██╗██╔════╝████╗  ██║██╔══██╗██╔══██╗██╔══██╗██║  ╚██╗ ██╔╝",
-        "██║   ██║██████╔╝█████╗  ██╔██╗ ██║███████║██████╔╝██████╔╝██║   ╚████╔╝ ",
-        "██║   ██║██╔═══╝ ██╔══╝  ██║╚██╗██║██╔══██║██╔═══╝ ██╔═══╝ ██║    ╚██╔╝  ",
-        "╚██████╔╝██║     ███████╗██║ ╚████║██║  ██║██║     ██║     ███████╗██║   ",
-        " ╚═════╝ ╚═╝     ╚══════╝╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝     ╚═╝     ╚══════╝╚═╝   ",
+        " ██████╗ ██████╗ ███████╗███╗   ██╗ ██████╗ ██████╗  █████╗ ███████╗██████╗ ",
+        "██╔═══██╗██╔══██╗██╔════╝████╗  ██║██╔════╝ ██╔══██╗██╔══██╗██╔════╝██╔══██╗",
+        "██║   ██║██████╔╝█████╗  ██╔██╗ ██║██║  ███╗██████╔╝███████║███████╗██████╔╝",
+        "██║   ██║██╔═══╝ ██╔══╝  ██║╚██╗██║██║   ██║██╔══██╗██╔══██║╚════██║██╔═══╝ ",
+        "╚██████╔╝██║     ███████╗██║ ╚████║╚██████╔╝██║  ██║██║  ██║███████║██║     ",
+        " ╚═════╝ ╚═╝     ╚══════╝╚═╝  ╚═══╝ ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝     ",
     ]
 
 
@@ -129,43 +129,43 @@ def print_banner(project_root: Path, *, version: str) -> None:
     logo = Group(
         *[
             Text(line, style="accent", overflow="crop", no_wrap=True)
-            for line in _openapply_logo()
+            for line in _opengrasp_logo()
         ]
     )
     left = Group(
         logo,
-        Text.assemble(("openapply", "accent"), ("  ", "muted"), (f"v{version}", "muted")),
+        Text.assemble(("opengrasp", "accent"), ("  ", "muted"), (f"v{version}", "muted")),
         Text("local-first job agent", style="muted"),
     )
 
     getting_started = _section(
         "Getting started",
         [
-            _cmd_line("openapply setup", "first-time wizard"),
-            _cmd_line("openapply doctor", "health checks"),
-            _cmd_line("openapply scan --limit 5 --link-limit 30", "discover jobs (after enabling ≥1 portal)"),
+            _cmd_line("opengrasp setup", "first-time wizard"),
+            _cmd_line("opengrasp doctor", "health checks"),
+            _cmd_line("opengrasp scan --limit 5 --link-limit 30", "discover jobs (after enabling ≥1 portal)"),
         ],
     )
 
     agent_tools = _section(
         "Agent tools",
         [
-            _cmd_line("openapply pipeline <url-or-jd>", "evaluate + report + CV PDF + cover letter"),
-            _cmd_line("openapply apply <url-or-jd>", "interactive apply flow (HITL)"),
-            _cmd_line("openapply batch --min-score B --limit 20", "process queue in parallel"),
-            _cmd_line("openapply tracker", "dashboard"),
+            _cmd_line("opengrasp pipeline <url-or-jd>", "evaluate + report + CV PDF + cover letter"),
+            _cmd_line("opengrasp apply <url-or-jd>", "interactive apply flow (HITL)"),
+            _cmd_line("opengrasp batch --min-score B --limit 20", "process queue in parallel"),
+            _cmd_line("opengrasp tracker", "dashboard"),
         ],
     )
 
     extras = _section(
         "Extras",
         [
-            _cmd_line("openapply research <job-id>", "company/role research report"),
-            _cmd_line("openapply outreach <job-id>", "draft a DM/email"),
-            _cmd_line("openapply compare 12,15,22", "compare offers/jobs"),
-            _cmd_line("openapply learn <job-id> <outcome>", "log outcomes"),
-            _cmd_line("openapply update", "update openapply to latest"),
-            _cmd_line("openapply reset", "reset local workspace (destructive)"),
+            _cmd_line("opengrasp research <job-id>", "company/role research report"),
+            _cmd_line("opengrasp outreach <job-id>", "draft a DM/email"),
+            _cmd_line("opengrasp compare 12,15,22", "compare offers/jobs"),
+            _cmd_line("opengrasp learn <job-id> <outcome>", "log outcomes"),
+            _cmd_line("opengrasp update", "update opengrasp to latest"),
+            _cmd_line("opengrasp reset", "reset local workspace (destructive)"),
         ],
     )
 
@@ -199,7 +199,7 @@ def print_banner(project_root: Path, *, version: str) -> None:
     else:
         content = Columns([left, right], equal=False, expand=True, padding=(0, 4))
 
-    title = Text.assemble(("openapply", "accent"), ("  ", "muted"), (f"v{version}", "muted"))
+    title = Text.assemble(("opengrasp", "accent"), ("  ", "muted"), (f"v{version}", "muted"))
     console.print("")
     console.print(panel(str(title), content))
     console.print("")

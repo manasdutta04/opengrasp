@@ -1,4 +1,4 @@
-# Open Apply Setup Guide
+# opengrasp Setup Guide
 
 This guide walks through local installation and first-run setup.
 
@@ -16,14 +16,14 @@ This guide walks through local installation and first-run setup.
 ```bash
 python -m venv .venv
 .venv\\Scripts\\activate
-pip install openapply
+pip install opengrasp
 ```
 
 ### Option B: develop from source
 
 ```bash
 git clone <your-fork-or-repo-url>
-cd openapply
+cd opengrasp
 python -m venv .venv
 .venv\\Scripts\\activate
 pip install -e .
@@ -48,7 +48,7 @@ ollama pull qwen2.5:14b
 ## 4) Run first-time wizard
 
 ```bash
-openapply setup
+opengrasp setup
 ```
 
 The setup wizard will:
@@ -62,8 +62,8 @@ The setup wizard will:
 After successful setup:
 
 ```bash
-openapply doctor
-openapply scan --limit 5 --link-limit 30
+opengrasp doctor
+opengrasp scan --limit 5 --link-limit 30
 ```
 
 ## Configure Portals Before Scanning
@@ -77,8 +77,8 @@ Setup creates `portals.yml`, but the big-company catalog is shipped **inactive b
 3) Re-run:
 
 ```bash
-openapply doctor
-openapply scan --limit 5 --link-limit 30
+opengrasp doctor
+opengrasp scan --limit 5 --link-limit 30
 ```
 
 Supported portal types:
@@ -92,13 +92,13 @@ Supported portal types:
 ## Core Commands
 
 ```bash
-openapply setup
-openapply scan
-openapply scan --auto
-openapply batch --min-score B --limit 20
-openapply apply <url-or-jd-text>
-openapply tracker
-openapply learn <job-id> <outcome>
+opengrasp setup
+opengrasp scan
+opengrasp scan --auto
+opengrasp batch --min-score B --limit 20
+opengrasp apply <url-or-jd-text>
+opengrasp tracker
+opengrasp learn <job-id> <outcome>
 ```
 
 ## What Each Command Does
@@ -115,7 +115,7 @@ openapply learn <job-id> <outcome>
 
 - Config: `config.yml`
 - Base CV: `cv.md`
-- Database: `data/openapply.db`
+- Database: `data/opengrasp.db`
 - Queue: `data/pipeline.md`
 - Scan log: `data/scan-history.md`
 - Generated CVs + cover letters: `output/`

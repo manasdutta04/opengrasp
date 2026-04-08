@@ -28,7 +28,7 @@ async def _run_outreach(job_id: int, channel: str) -> Path:
     project_root = Path.cwd()
     config_path = project_root / "config.yml"
     if not config_path.exists():
-        raise typer.BadParameter("config.yml not found. Run 'openapply setup' first.")
+        raise typer.BadParameter("config.yml not found. Run 'opengrasp setup' first.")
 
     config = yaml.safe_load(config_path.read_text(encoding="utf-8")) or {}
     profile = config.get("profile", {}) if isinstance(config.get("profile"), dict) else {}

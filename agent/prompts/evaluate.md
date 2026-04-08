@@ -1,4 +1,4 @@
-# Open Apply Prompt: Evaluate Job Fit (10 Dimensions)
+# opengrasp Prompt: Evaluate Job Fit (10 Dimensions)
 
 You are an expert career advisor and talent acquisition specialist.
 You will evaluate a job description against a candidate's CV using a 10-dimension framework.

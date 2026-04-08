@@ -31,11 +31,11 @@ Include:
 - Status updates target: at least every 14 days while actively triaging.
 - Fix timelines vary by severity, complexity, and maintainer availability.
 
-## Scope Notes for openapply
+## Scope Notes for opengrasp
 
 This project is local-first. Security-sensitive areas include:
 
-- Local data handling (`config.yml`, `cv.md`, `data/openapply.db`, generated artifacts)
+- Local data handling (`config.yml`, `cv.md`, `data/opengrasp.db`, generated artifacts)
 - Prompt and model invocation boundaries
 - Browser automation and form-drafting logic
 - Dependency supply-chain risk

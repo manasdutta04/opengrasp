@@ -26,9 +26,9 @@ async def _run_batch(min_grade: str, limit: int | None) -> None:
     cv_path = project_root / "cv.md"
 
     if not config_path.exists():
-        raise typer.BadParameter("config.yml not found. Run 'openapply setup' first.")
+        raise typer.BadParameter("config.yml not found. Run 'opengrasp setup' first.")
     if not cv_path.exists():
-        raise typer.BadParameter("cv.md not found. Run 'openapply setup' first.")
+        raise typer.BadParameter("cv.md not found. Run 'opengrasp setup' first.")
 
     config = yaml.safe_load(config_path.read_text(encoding="utf-8")) or {}
     concurrency = (
@@ -139,9 +139,9 @@ def command(
     """Process pipeline queue in parallel.
 
     Examples:
-      openapply batch
-      openapply batch --min-score B --limit 20
-      openapply batch --min-score C --limit 50
+      opengrasp batch
+      opengrasp batch --min-score B --limit 20
+      opengrasp batch --min-score C --limit 50
     """
     grade = min_score.strip().upper()
     if grade not in {"A", "B", "C", "D", "F"}:

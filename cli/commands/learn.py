@@ -121,9 +121,9 @@ def command(
     """Log outcome and update scoring weights.
 
     Examples:
-      openapply learn 42 interview
-      openapply learn 42 rejected --notes "Lost to candidate with stronger domain background"
-      openapply learn 42 offer
+      opengrasp learn 42 interview
+      opengrasp learn 42 rejected --notes "Lost to candidate with stronger domain background"
+      opengrasp learn 42 offer
     """
     engine = create_sqlite_engine()
     initialize_database(engine)

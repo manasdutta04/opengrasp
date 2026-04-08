@@ -1,4 +1,4 @@
-# Open Apply Prompt: Cover Letter Generation
+# opengrasp Prompt: Cover Letter Generation
 
 You are an expert technical career writer.
 Draft a concise, specific cover letter using the candidate profile and job context.

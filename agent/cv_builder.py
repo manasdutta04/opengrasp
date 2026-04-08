@@ -173,7 +173,7 @@ class CVBuilder:
         config_path = self._project_root / self._config_path
         if not config_path.exists():
             raise FileNotFoundError(
-                f"Config not found at {config_path}. Run 'openapply setup' first."
+                f"Config not found at {config_path}. Run 'opengrasp setup' first."
             )
 
         return yaml.safe_load(config_path.read_text(encoding="utf-8")) or {}
@@ -229,7 +229,7 @@ class CVBuilder:
         try:
             return await self._ollama_client.complete_json(
                 system_prompt=(
-                    "You are Open Apply's CV tailoring model. Return only valid JSON as requested."
+                    "You are Open Grasp's CV tailoring model. Return only valid JSON as requested."
                 ),
                 user_prompt=prompt,
             )

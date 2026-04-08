@@ -10,15 +10,15 @@ from cli.commands import apply, batch, compare, doctor, learn, outreach, pipelin
 
 app = typer.Typer(
     help=(
-        "Open Apply CLI.\n\n"
+        "Open Grasp CLI.\n\n"
         "Examples:\n"
-        "  openapply setup\n"
-        "  openapply apply <url-or-jd-text>\n"
-        "  openapply scan [--auto]\n"
-        "  openapply batch [--min-score B] [--limit 20]\n"
-        "  openapply learn <job-id> <outcome>\n"
-        "  openapply tracker\n"
-        "  openapply --help\n"
+        "  opengrasp setup\n"
+        "  opengrasp apply <url-or-jd-text>\n"
+        "  opengrasp scan [--auto]\n"
+        "  opengrasp batch [--min-score B] [--limit 20]\n"
+        "  opengrasp learn <job-id> <outcome>\n"
+        "  opengrasp tracker\n"
+        "  opengrasp --help\n"
     ),
     no_args_is_help=False,
     rich_markup_mode="rich",
@@ -27,7 +27,7 @@ app = typer.Typer(
 
 @app.callback(invoke_without_command=True)
 def main(ctx: typer.Context) -> None:
-    """Open Apply command registry."""
+    """Open Grasp command registry."""
     # If a subcommand was invoked, do nothing.
     if ctx.invoked_subcommand is not None:
         return
@@ -39,7 +39,7 @@ def main(ctx: typer.Context) -> None:
         return
 
     try:
-        version = metadata.version("openapply")
+        version = metadata.version("opengrasp")
     except Exception:
         version = "dev"
 
@@ -54,7 +54,7 @@ def main(ctx: typer.Context) -> None:
     help=(
         "Run first-time setup wizard.\n\n"
         "Example:\n"
-        "  openapply setup"
+        "  opengrasp setup"
     ),
 )
 def setup_command() -> None:
@@ -79,14 +79,14 @@ def portal_command() -> None:
 
 @app.command(
     "update",
-    help="Update openapply to the latest version (pip).",
+    help="Update opengrasp to the latest version (pip).",
 )
 def update_command() -> None:
     update.command()
 
 @app.command(
     "reset",
-    help="Reset local OpenApply workspace files (destructive).",
+    help="Reset local OpenGrasp workspace files (destructive).",
 )
 def reset_command(
     yes: bool = typer.Option(False, "--yes", "-y", help="Skip confirmation prompt."),
@@ -102,8 +102,8 @@ def reset_command(
     help=(
         "Auto pipeline: evaluate + generate report + CV PDF + cover letter.\n\n"
         "Examples:\n"
-        "  openapply pipeline https://boards.greenhouse.io/company/jobs/123\n"
-        "  openapply pipeline \"Senior Backend Engineer ...\""
+        "  opengrasp pipeline https://boards.greenhouse.io/company/jobs/123\n"
+        "  opengrasp pipeline \"Senior Backend Engineer ...\""
     ),
 )
 def pipeline_command(target: str = typer.Argument(..., help="Job URL or raw JD text.")) -> None:
@@ -141,8 +141,8 @@ def compare_command(job_ids: str = typer.Argument(..., help="Comma-separated job
     help=(
         "Evaluate and process one job URL or JD text.\n\n"
         "Examples:\n"
-        "  openapply apply https://boards.greenhouse.io/company/jobs/123\n"
-        "  openapply apply \"Senior Backend Engineer ...\""
+        "  opengrasp apply https://boards.greenhouse.io/company/jobs/123\n"
+        "  opengrasp apply \"Senior Backend Engineer ...\""
     ),
 )
 def apply_command(target: str = typer.Argument(..., help="Job URL or raw JD text.")) -> None:
@@ -154,8 +154,8 @@ def apply_command(target: str = typer.Argument(..., help="Job URL or raw JD text
     help=(
         "Interactive dashboard for applications and outcomes.\n\n"
         "Examples:\n"
-        "  openapply tracker\n"
-        "  openapply tracker --grade B --status applied --sort-by score"
+        "  opengrasp tracker\n"
+        "  opengrasp tracker --grade B --status applied --sort-by score"
     ),
 )
 def tracker_command(
@@ -177,8 +177,8 @@ def tracker_command(
     help=(
         "Discover jobs across configured portals.\n\n"
         "Examples:\n"
-        "  openapply scan\n"
-        "  openapply scan --auto"
+        "  opengrasp scan\n"
+        "  opengrasp scan --auto"
     ),
 )
 def scan_command(
@@ -194,8 +194,8 @@ def scan_command(
     help=(
         "Process pipeline queue in parallel.\n\n"
         "Examples:\n"
-        "  openapply batch\n"
-        "  openapply batch --min-score B --limit 20"
+        "  opengrasp batch\n"
+        "  opengrasp batch --min-score B --limit 20"
     ),
 )
 def batch_command(
@@ -210,8 +210,8 @@ def batch_command(
     help=(
         "Log outcome and update scoring weights.\n\n"
         "Examples:\n"
-        "  openapply learn 42 interview\n"
-        "  openapply learn 42 rejected --notes \"Lost to stronger domain fit\""
+        "  opengrasp learn 42 interview\n"
+        "  opengrasp learn 42 rejected --notes \"Lost to stronger domain fit\""
     ),
 )
 def learn_command(

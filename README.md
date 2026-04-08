@@ -1,21 +1,21 @@
-# openapply
+# opengrasp
 
 
 ![License MIT](https://img.shields.io/badge/license-MIT-84CC16?style=for-the-badge)
-![PyPI](https://img.shields.io/pypi/v/openapply?style=for-the-badge&label=PyPI)
-![Python](https://img.shields.io/pypi/pyversions/openapply?style=for-the-badge&label=Python)
+![PyPI](https://img.shields.io/pypi/v/opengrasp?style=for-the-badge&label=PyPI)
+![Python](https://img.shields.io/pypi/pyversions/opengrasp?style=for-the-badge&label=Python)
 ![Local First](https://img.shields.io/badge/local--first-privacy%20focused-0EA5E9?style=for-the-badge)
 ![HITL](https://img.shields.io/badge/HITL-human%20in%20the%20loop-F59E0B?style=for-the-badge)
 
 > Autonomous job search agent. Runs 100% locally. Your CV never leaves your machine.
 
-openapply is an open-source, privacy-first, terminal-first job application assistant.
+opengrasp is an open-source, privacy-first, terminal-first job application assistant.
 It helps you discover roles, score fit, tailor ATS-safe CVs, and draft applications with Human In The Loop controls.
 
 ## Why
 
 career-ops showed the world this is possible.
-openapply makes it accessible to everyone:
+opengrasp makes it accessible to everyone:
 
 - No paid cloud AI subscription requirement
 - No cloud API key requirement
@@ -24,7 +24,7 @@ openapply makes it accessible to everyone:
 
 ## What It Does
 
-openapply is designed as an end-to-end local pipeline:
+opengrasp is designed as an end-to-end local pipeline:
 
 1. Job discovery across configured portals
 - scans active portals and discovers new listings
@@ -58,14 +58,14 @@ openapply is designed as an end-to-end local pipeline:
 ## Quick Start
 
 ```bash
-pip install openapply
-openapply setup
+pip install opengrasp
+opengrasp setup
 ```
 
 Then:
 
 ```bash
-openapply scan
+opengrasp scan
 ```
 
 ### Required: enable at least 1 portal
@@ -76,8 +76,8 @@ openapply scan
 3) Run:
 
 ```bash
-openapply doctor
-openapply scan --limit 5 --link-limit 30
+opengrasp doctor
+opengrasp scan --limit 5 --link-limit 30
 ```
 ## How To Test (Recommended)
 
@@ -93,7 +93,7 @@ python -m playwright install chromium
 Run quick health checks:
 
 ```bash
-openapply doctor
+opengrasp doctor
 ```
 
 Run unit tests:
@@ -109,9 +109,9 @@ Once you publish (see “Publish To PyPI” below), verify in a clean environmen
 ```bash
 python -m venv .venv
 .venv\Scripts\activate
-pip install openapply
-openapply setup
-openapply doctor
+pip install opengrasp
+opengrasp setup
+opengrasp doctor
 ```
 
 ### 3) End-to-end CLI smoke test
@@ -120,45 +120,45 @@ openapply doctor
 - Scan:
 
 ```bash
-openapply scan --limit 5 --link-limit 30
+opengrasp scan --limit 5 --link-limit 30
 ```
 
 - Run auto-pipeline for a known job URL:
 
 ```bash
-openapply pipeline <job-url>
+opengrasp pipeline <job-url>
 ```
 
 - Open tracker TUI:
 
 ```bash
-openapply tracker
+opengrasp tracker
 ```
 
 ## Philosophy
 
 AI analyzes. You decide. HITL always.
 
-openapply intentionally avoids full autonomy on final submission actions.
+opengrasp intentionally avoids full autonomy on final submission actions.
 The system can evaluate, draft, and prefill, but a human must review before applying.
 
 ## Core Commands
 
 ```bash
-openapply setup
-openapply doctor
-openapply scan
-openapply scan --auto
-openapply batch --min-score B --limit 20
-openapply pipeline <url-or-jd-text>
-openapply apply <url-or-jd-text>
-openapply tracker
-openapply learn <job-id> <outcome>
+opengrasp setup
+opengrasp doctor
+opengrasp scan
+opengrasp scan --auto
+opengrasp batch --min-score B --limit 20
+opengrasp pipeline <url-or-jd-text>
+opengrasp apply <url-or-jd-text>
+opengrasp tracker
+opengrasp learn <job-id> <outcome>
 ```
 
 ## Models
 
-openapply uses local Ollama models. A practical starting setup:
+opengrasp uses local Ollama models. A practical starting setup:
 
 - `llama3.1:8b` for evaluation
 	- Pros: fast, low hardware footprint, good for scoring and routing
@@ -177,12 +177,12 @@ General guidance:
 ## Local-First Privacy
 
 - CV, config, reports, and generated files are stored locally.
-- SQLite DB runs locally (`data/openapply.db`).
+- SQLite DB runs locally (`data/opengrasp.db`).
 - Prompt and model execution are local-first by design.
 
 ## Project Status
 
-openapply is in active development (`0.1.2`) and currently optimized for terminal workflows.
+opengrasp is in active development (`0.1.2`) and currently optimized for terminal workflows.
 Web UI support is planned as secondary priority.
 
 ## Documentation
@@ -208,8 +208,8 @@ To help keep the project healthy and maintainable:
 Use this flow to publish releases so users can run:
 
 ```bash
-pip install openapply
-openapply setup
+pip install opengrasp
+opengrasp setup
 ```
 
 Build and validate:
@@ -229,7 +229,7 @@ python -m twine upload --repository testpypi dist/*
 Test install from TestPyPI in a clean environment:
 
 ```bash
-python -m pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple openapply
+python -m pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple opengrasp
 ```
 
 Upload to PyPI:
@@ -249,7 +249,7 @@ PowerShell helper:
 ## Inspiration
 
 Inspired by the ideas popularized in career-ops (MIT), including structured fit scoring, CV templating workflow, and portal scanning patterns.
-openapply is implemented from scratch as a standalone Python product.
+opengrasp is implemented from scratch as a standalone Python product.
 
 ## License
 

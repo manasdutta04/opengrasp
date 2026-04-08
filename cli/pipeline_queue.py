@@ -17,9 +17,9 @@ def ensure_pipeline_file(project_root: Path) -> Path:
         return path
 
     path.write_text(
-        "# Open Apply - Processing Queue\n\n"
+        "# Open Grasp - Processing Queue\n\n"
         "Add job URLs here, one per line.\n"
-        "Run: openapply batch\n\n"
+        "Run: opengrasp batch\n\n"
         "## Pending\n"
         "\n"
         "## Processed\n"
@@ -60,10 +60,10 @@ def load_pipeline(path: Path) -> PipelineState:
 
 def save_pipeline(path: Path, state: PipelineState) -> None:
     lines: list[str] = []
-    lines.append("# Open Apply - Processing Queue")
+    lines.append("# Open Grasp - Processing Queue")
     lines.append("")
     lines.append("Add job URLs here, one per line.")
-    lines.append("Run: openapply batch")
+    lines.append("Run: opengrasp batch")
     lines.append("")
     lines.append("## Pending")
     if state.pending:
@@ -99,7 +99,7 @@ def append_pending(project_root: Path, urls: list[str]) -> int:
     state = load_pipeline(path)
     existing = set(state.pending) | set(state.processed)
 
-    additions = [url for url in urls if url not in existing]
+    additions = [url for url in dedupe_keep_order(urls) if url not in existing]
     if not additions:
         return 0
 

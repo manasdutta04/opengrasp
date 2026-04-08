@@ -1,1 +1,1 @@
-"""Command modules for Open Apply CLI."""
+"""Command modules for Open Grasp CLI."""

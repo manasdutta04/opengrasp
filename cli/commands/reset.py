@@ -27,7 +27,7 @@ def command(
     keep_portals: bool = typer.Option(False, "--keep-portals", help="Keep portals.yml."),
     keep_config: bool = typer.Option(False, "--keep-config", help="Keep config.yml."),
 ) -> None:
-    """Reset local OpenApply workspace files (destructive)."""
+    """Reset local OpenGrasp workspace files (destructive)."""
     root = Path.cwd()
 
     targets: list[tuple[str, Path, bool]] = [
@@ -69,6 +69,6 @@ def command(
     msg = f"Deleted {deleted} item(s)."
     if failed:
         msg += "\nFailed:\n" + "\n".join(f"- {x}" for x in failed)
-    msg += "\n\nNext: openapply setup"
+    msg += "\n\nNext: opengrasp setup"
     console.print(panel("Done", msg))
 

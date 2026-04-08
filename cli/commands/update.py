@@ -11,22 +11,22 @@ from cli.ui import console, panel
 
 def _version() -> str:
     try:
-        return metadata.version("openapply")
+        return metadata.version("opengrasp")
     except Exception:
         return "unknown"
 
 
 def _pip_update_cmd() -> list[str]:
-    return [sys.executable, "-m", "pip", "install", "-U", "openapply"]
+    return [sys.executable, "-m", "pip", "install", "-U", "opengrasp"]
 
 
 def _is_windows_exe_lock(exc: Exception) -> bool:
     text = str(exc).lower()
-    return sys.platform.startswith("win") and "winerror 32" in text and "openapply.exe" in text
+    return sys.platform.startswith("win") and "winerror 32" in text and "opengrasp.exe" in text
 
 
 def _schedule_windows_update() -> None:
-    # Run pip in a detached cmd after a short delay so this process can exit and release openapply.exe.
+    # Run pip in a detached cmd after a short delay so this process can exit and release opengrasp.exe.
     delayed_cmd = f"ping 127.0.0.1 -n 3 >nul && {subprocess.list2cmdline(_pip_update_cmd())}"
     subprocess.Popen(
         ["cmd", "/c", delayed_cmd],
@@ -35,9 +35,9 @@ def _schedule_windows_update() -> None:
 
 
 def command() -> None:
-    """Update OpenApply to the latest version (pip)."""
+    """Update OpenGrasp to the latest version (pip)."""
     before = _version()
-    console.print(panel("Update", f"Current version: {before}\nRunning: python -m pip install -U openapply"))
+    console.print(panel("Update", f"Current version: {before}\nRunning: python -m pip install -U opengrasp"))
 
     try:
         subprocess.run(_pip_update_cmd(), check=True)
@@ -48,9 +48,9 @@ def command() -> None:
                 console.print(
                     panel(
                         "Update scheduled",
-                        "Windows is locking openapply.exe while this command is running.\n"
+                        "Windows is locking opengrasp.exe while this command is running.\n"
                         "A separate updater window was started and will continue after this command exits.\n"
-                        f"If needed, run manually:\n  {sys.executable} -m pip install -U openapply",
+                        f"If needed, run manually:\n  {sys.executable} -m pip install -U opengrasp",
                     )
                 )
                 raise typer.Exit(code=0) from exc
@@ -59,7 +59,7 @@ def command() -> None:
         console.print(
             panel(
                 "Update failed",
-                f"[bad]{exc}[/bad]\nTry manually:\n  {sys.executable} -m pip install -U openapply",
+                f"[bad]{exc}[/bad]\nTry manually:\n  {sys.executable} -m pip install -U opengrasp",
             )
         )
         raise typer.Exit(code=1) from exc

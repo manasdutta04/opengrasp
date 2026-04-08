@@ -1,18 +1,18 @@
-# OpenApply portals configuration (career-ops inspired).
+# OpenGrasp portals configuration (career-ops inspired).
 # Copy to `portals.yml` and customize.
 #
 # IMPORTANT:
-# - `openapply scan` REQUIRES at least one portal with `active: true`.
+# - `opengrasp scan` REQUIRES at least one portal with `active: true`.
 # - This file ships a big-company catalog, but everything is OFF by default so you choose.
 #
 # Notes:
 # - `tracked_companies` are direct company boards/careers pages to scan.
-# - OpenApply will scrape job pages and store JDs locally in SQLite.
+# - OpenGrasp will scrape job pages and store JDs locally in SQLite.
 #
 # Quick start:
 # 1) Pick one company board below and set `active: true`
-# 2) Run: `openapply doctor`
-# 3) Run: `openapply scan --limit 5 --link-limit 30`
+# 2) Run: `opengrasp doctor`
+# 3) Run: `opengrasp scan --limit 5 --link-limit 30`
 
 tracked_companies:
   # --- Example: enable this first ---

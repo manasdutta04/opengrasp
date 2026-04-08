@@ -1,4 +1,4 @@
-# OpenApply Architecture (Repo Guide)
+# opengrasp Architecture (Repo Guide)
 
 ## Layers
 - `cli/`: Typer CLI + interactive terminal UX (Textual tracker).
@@ -9,7 +9,7 @@
 - `config.yml`: user settings (models, targets, scoring).
 - `portals.yml`: scanner config (preferred).
 - `cv.md`: base CV in markdown.
-- `data/openapply.db`: SQLite DB.
+- `data/opengrasp.db`: SQLite DB.
 - `data/pipeline.md`: queue for batch processing.
 - `data/scan-history.tsv`: dedupe history (machine-friendly).
 - `reports/`: evaluation + research markdown.

@@ -1,4 +1,4 @@
-"""Open Apply agent layer."""
+"""Open Grasp agent layer."""
 
 from .batch import BatchProcessor, BatchRunResult, BatchTaskResult
 from .cv_builder import CVBuildResult, CVBuilder, CVBuilderError

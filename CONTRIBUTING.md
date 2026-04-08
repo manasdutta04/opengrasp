@@ -1,6 +1,6 @@
-# Contributing to openapply
+# Contributing to opengrasp
 
-Thanks for your interest in improving openapply.
+Thanks for your interest in improving opengrasp.
 This project is local-first, privacy-first, and human-in-the-loop by design.
 
 ## Ground Rules

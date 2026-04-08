@@ -153,7 +153,7 @@ async def _generate_cover_letter(
     )
 
     payload = await ollama_client.complete_json(
-        system_prompt="You are Open Apply's cover letter writer. Return JSON only.",
+        system_prompt="You are Open Grasp's cover letter writer. Return JSON only.",
         user_prompt=prompt,
     )
 
@@ -225,9 +225,9 @@ async def run_offer_pipeline(target: str, *, interactive: bool, allow_form_draft
     cv_path = project_root / "cv.md"
 
     if not config_path.exists():
-        raise typer.BadParameter("config.yml not found. Run 'openapply setup' first.")
+        raise typer.BadParameter("config.yml not found. Run 'opengrasp setup' first.")
     if not cv_path.exists():
-        raise typer.BadParameter("cv.md not found. Run 'openapply setup' first.")
+        raise typer.BadParameter("cv.md not found. Run 'opengrasp setup' first.")
 
     config = _load_yaml(config_path)
     profile = config.get("profile", {}) if isinstance(config.get("profile"), dict) else {}

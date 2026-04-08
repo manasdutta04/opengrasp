@@ -96,8 +96,8 @@ def command(
     """Run full apply flow for one job.
 
     Examples:
-      openapply apply https://boards.greenhouse.io/company/jobs/123
-            openapply apply "Senior Backend Engineer ..."
+      opengrasp apply https://boards.greenhouse.io/company/jobs/123
+            opengrasp apply "Senior Backend Engineer ..."
     """
     try:
         asyncio.run(_run_apply(target))

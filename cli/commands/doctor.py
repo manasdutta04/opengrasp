@@ -15,7 +15,7 @@ from memory.db import Job, Portal, build_session_factory, create_sqlite_engine, 
 from cli.ui import console, panel
 
 _PORTALS_FIX = (
-    "Run `openapply portal` to enable at least one portal (or edit portals.yml manually). "
+    "Run `opengrasp portal` to enable at least one portal (or edit portals.yml manually). "
     "Tip: start with a single company board to keep scans fast."
 )
 
@@ -47,7 +47,7 @@ def _check_db(project_root: Path) -> tuple[bool, str]:
         session_factory = build_session_factory(engine)
         with session_factory() as session:
             _ = session.scalar(select(Job.id).limit(1))
-        return True, f"SQLite OK ({(project_root / 'data' / 'openapply.db').as_posix()})"
+        return True, f"SQLite OK ({(project_root / 'data' / 'opengrasp.db').as_posix()})"
     except Exception as exc:
         return False, f"DB error: {exc}"
 
@@ -72,7 +72,7 @@ def _check_portals(project_root: Path) -> tuple[bool, str]:
 
 
 def command() -> None:
-    """Health checks for OpenApply setup and dependencies."""
+    """Health checks for OpenGrasp setup and dependencies."""
     project_root = Path.cwd()
     config_path = project_root / "config.yml"
     cv_path = project_root / "cv.md"
@@ -80,14 +80,14 @@ def command() -> None:
     checks: list[tuple[str, bool, str]] = []
 
     if not config_path.exists():
-        checks.append(("config.yml", False, "Missing config.yml (run: openapply setup)"))
+        checks.append(("config.yml", False, "Missing config.yml (run: opengrasp setup)"))
         config = {}
     else:
         config = yaml.safe_load(config_path.read_text(encoding="utf-8")) or {}
         checks.append(("config.yml", True, "Found config.yml"))
 
     if not cv_path.exists():
-        checks.append(("cv.md", False, "Missing cv.md (run: openapply setup)"))
+        checks.append(("cv.md", False, "Missing cv.md (run: opengrasp setup)"))
     else:
         checks.append(("cv.md", True, "Found cv.md"))
 
@@ -112,7 +112,7 @@ def command() -> None:
         mark = "[green]OK[/green]" if ok else "[red]FAIL[/red]"
         lines.append(f"- {mark} [bold]{name}[/bold]: {msg}")
 
-    console.print(panel("openapply doctor", "\n".join(lines)))
+    console.print(panel("opengrasp doctor", "\n".join(lines)))
     if failed:
         raise typer.Exit(code=1)
 

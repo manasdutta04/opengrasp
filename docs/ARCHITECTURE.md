@@ -1,14 +1,14 @@
-# Open Apply Architecture
+# opengrasp Architecture
 
-Open Apply is a local-first autonomous job search agent.
+opengrasp is a local-first autonomous job search agent.
 It runs on your machine, uses Ollama for inference, and keeps Human In The Loop (HITL) at all critical decision points.
 
 ## System Overview
 
-Open Apply is organized into four major layers:
+Open Grasp is organized into four major layers:
 
 1. CLI layer (`cli/`):
-- User entrypoint (`openapply`)
+- User entrypoint (`opengrasp`)
 - Command orchestration (`setup`, `apply`, `scan`, `batch`, `tracker`, `learn`)
 - Rich terminal UX and confirmations
 
@@ -34,7 +34,7 @@ Open Apply is organized into four major layers:
 
 ## Runtime Flow Between Components
 
-### Apply flow (`openapply apply <url-or-jd-text>`)
+### Apply flow (`opengrasp apply <url-or-jd-text>`)
 
 1. CLI command receives URL or JD text.
 2. Scraper extracts structured JD if URL is provided.
@@ -47,7 +47,7 @@ Open Apply is organized into four major layers:
 9. If user chooses yes and target is URL, scraper fills form drafts and returns all values for review.
 10. Application row is persisted with explicit `auto_applied=False`; status only advances with human review confirmation.
 
-### Scan flow (`openapply scan [--auto]`)
+### Scan flow (`opengrasp scan [--auto]`)
 
 1. Scanner reads active portals from DB (`portals`).
 2. Scanner loads `agent/prompts/scan_query.md` to generate per-portal queries.
@@ -59,7 +59,7 @@ Open Apply is organized into four major layers:
 6. Every scan action is appended to `data/scan-history.md`.
 7. `--auto` mode evaluates discovered jobs and appends B+ URLs to `data/pipeline.md`.
 
-### Batch flow (`openapply batch`)
+### Batch flow (`opengrasp batch`)
 
 1. Batch command reads URLs from `data/pipeline.md` Pending.
 2. `agent.batch.BatchProcessor` runs worker pool (asyncio, configurable concurrency).
@@ -68,7 +68,7 @@ Open Apply is organized into four major layers:
 5. Resumable behavior skips already completed URLs (existing evaluation + CV).
 6. Pipeline markdown is updated: processed URLs moved to Processed section.
 
-### Learn flow (`openapply learn <job-id> <outcome>`)
+### Learn flow (`opengrasp learn <job-id> <outcome>`)
 
 1. Outcome is logged to `applications` + `outcomes`.
 2. Latest evaluation dimensions are analyzed.
@@ -98,7 +98,7 @@ The memory layer is SQLite + SQLAlchemy.
 
 ## HITL Philosophy and Safety Controls
 
-Open Apply enforces the rule: AI analyzes, human decides.
+opengrasp enforces the rule: AI analyzes, human decides.
 
 Implemented controls:
 
@@ -153,7 +153,7 @@ Current prompt set:
 
 ## Local-First and Failure Modes
 
-Open Apply is designed to degrade gracefully.
+opengrasp is designed to degrade gracefully.
 
 - If Ollama is unavailable:
   - Commands return clear actionable errors.

@@ -1,10 +1,10 @@
-# Publishing `openapply` to PyPI
+# Publishing `opengrasp` to PyPI
 
-The package is configured in `pyproject.toml` with the console entry point `openapply`.
+The package is configured in `pyproject.toml` with the console entry point `opengrasp`.
 
 ## One-time: PyPI credentials
 
-1. Create an API token on [pypi.org](https://pypi.org/manage/account/token/) (scope: entire account or project `openapply` after the first upload).
+1. Create an API token on [pypi.org](https://pypi.org/manage/account/token/) (scope: entire account or project `opengrasp` after the first upload).
 2. Set environment variables (do **not** commit tokens):
 
 ```powershell
@@ -48,8 +48,8 @@ Or use the helper from the repo root:
 Users install with:
 
 ```bash
-pip install openapply
-openapply setup
+pip install opengrasp
+opengrasp setup
 ```
 
 ## Version bumps

@@ -1,4 +1,4 @@
-# Open Apply Prompt: Tailor CV For Job
+# opengrasp Prompt: Tailor CV For Job
 
 You are an expert resume writer and ATS optimization specialist.
 Use the base CV, JD, and evaluation context to produce a high-signal tailored CV plan.

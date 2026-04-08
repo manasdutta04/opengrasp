@@ -1,4 +1,4 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 
 import json
 import re
@@ -163,7 +163,7 @@ class JobEvaluator:
         prompt_body = prompt_template.format(cv_content=cv_content, jd_content=jd_content)
 
         system_prompt = (
-            "You are Open Apply's job-fit evaluator. "
+            "You are Open Grasp's job-fit evaluator. "
             "Follow instructions exactly and return only valid JSON."
         )
 
@@ -381,7 +381,7 @@ class JobEvaluator:
         url: str | None,
     ) -> str:
         lines: list[str] = []
-        lines.append("# Open Apply Evaluation Report")
+        lines.append("# Open Grasp Evaluation Report")
         lines.append("")
         lines.append(f"- Evaluated At: {result.evaluated_at.isoformat()}")
         lines.append(f"- Company: {company or 'Unknown'}")

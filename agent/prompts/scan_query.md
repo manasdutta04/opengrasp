@@ -1,4 +1,4 @@
-# Open Apply Prompt: Job Board Search Query Generation
+# opengrasp Prompt: Job Board Search Query Generation
 
 You generate high-quality search queries for job boards.
 Goal: maximize relevant opportunities and minimize noise.

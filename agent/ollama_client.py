@@ -79,7 +79,7 @@ class OllamaClient:
 
     async def complete_json(self, system_prompt: str, user_prompt: str) -> dict[str, Any]:
         """Generate a completion and parse it as strict JSON."""
-        if os.environ.get("OPENAPPLY_FAKE_OLLAMA", "").strip() == "1":
+        if os.environ.get("OPENGRASP_FAKE_OLLAMA", "").strip() == "1":
             return self._fake_json_response(system_prompt=system_prompt, user_prompt=user_prompt)
 
         raw = await self.complete(system_prompt=system_prompt, user_prompt=user_prompt, stream=False)
@@ -257,7 +257,7 @@ class OllamaClient:
     def _load_settings(config_path: Path) -> OllamaSettings:
         if not config_path.exists():
             raise OllamaClientError(
-                f"Config not found at {config_path}. Run 'openapply setup' to create config.yml."
+                f"Config not found at {config_path}. Run 'opengrasp setup' to create config.yml."
             )
 
         with config_path.open("r", encoding="utf-8") as handle:

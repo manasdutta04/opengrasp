@@ -1,1 +1,1 @@
-"""CLI package for Open Apply."""
+"""CLI package for Open Grasp."""

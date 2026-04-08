@@ -1,4 +1,4 @@
-# Open Apply Prompt: Compare Offers
+# opengrasp Prompt: Compare Offers
 
 You compare multiple roles for a job seeker and recommend which to prioritize.
 

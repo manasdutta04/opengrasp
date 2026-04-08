@@ -8,8 +8,8 @@
 
 ## First run
 ```bash
-openapply setup
-openapply doctor
+opengrasp setup
+opengrasp doctor
 ```
 
 ## Scanner config

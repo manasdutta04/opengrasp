@@ -26,7 +26,7 @@ def _load_prompt(project_root: Path) -> str:
 
 def _render_markdown(job: Job, payload: dict[str, Any]) -> str:
     lines: list[str] = []
-    lines.append("# Open Apply Research")
+    lines.append("# Open Grasp Research")
     lines.append("")
     lines.append(f"- Job ID: {job.id}")
     lines.append(f"- Company: {job.company or 'Unknown'}")
@@ -60,7 +60,7 @@ async def _run_research(job_id: int) -> Path:
     project_root = Path.cwd()
     config_path = project_root / "config.yml"
     if not config_path.exists():
-        raise typer.BadParameter("config.yml not found. Run 'openapply setup' first.")
+        raise typer.BadParameter("config.yml not found. Run 'opengrasp setup' first.")
 
     config = yaml.safe_load(config_path.read_text(encoding="utf-8")) or {}
     signals: dict[str, Any] = {}
@@ -91,7 +91,7 @@ async def _run_research(job_id: int) -> Path:
         signals_json=json.dumps(signals, ensure_ascii=True, indent=2),
     )
     payload = await client.complete_json(
-        system_prompt="You are Open Apply's company researcher. Return JSON only.",
+        system_prompt="You are Open Grasp's company researcher. Return JSON only.",
         user_prompt=prompt,
     )
 

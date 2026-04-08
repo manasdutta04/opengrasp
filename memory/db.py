@@ -192,7 +192,7 @@ def default_db_url(project_root: Path | None = None) -> str:
     root = project_root or Path.cwd()
     db_dir = root / "data"
     db_dir.mkdir(parents=True, exist_ok=True)
-    return f"sqlite:///{(db_dir / 'openapply.db').as_posix()}"
+    return f"sqlite:///{(db_dir / 'opengrasp.db').as_posix()}"
 
 
 def create_sqlite_engine(database_url: str | None = None) -> Engine:
