@@ -248,7 +248,7 @@ PowerShell helper:
 
 ## Inspiration
 
-Inspired by the ideas popularized in career-ops (MIT), including structured fit scoring, CV templating workflow, and portal scanning patterns.
+Inspired by the ideas popularized in career-ops (MIT).
 opengrasp is implemented from scratch as a standalone Python product.
 
 ## License
